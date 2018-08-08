@@ -37,6 +37,11 @@ class ConfigDeviceActivity: AppCompatActivity() {
             if(deviceData.name!=null && !deviceData.name!!.isEmpty()){
                 config_deviceName.text = Editable.Factory.getInstance().newEditable(deviceData.name)
             }
+            config_maxTries.text =
+                        Editable.Factory.getInstance().newEditable(deviceData.maxTries.toString())
+            config_msTimeBetweenEachTry.text =
+                    Editable.Factory.getInstance().
+                            newEditable(deviceData.msTimeBetweenEachTry.toString())
             for(relay in deviceData.relays){
                 if(relay.index >= 0 && relay.index < inputTextArray.size){
                     if(!relay.name.isEmpty()){
@@ -73,6 +78,13 @@ class ConfigDeviceActivity: AppCompatActivity() {
     private fun saveDeviceConfig() {
         if(config_deviceName.text != null && !config_deviceName.text.isEmpty()){
             deviceDataToSave.name = config_deviceName.text.toString()
+        }
+        if(config_msTimeBetweenEachTry.text != null && !config_msTimeBetweenEachTry.text.isEmpty()){
+            deviceDataToSave.msTimeBetweenEachTry =
+                    java.lang.Long.valueOf(config_msTimeBetweenEachTry.text.toString())
+        }
+        if(config_maxTries.text != null && !config_maxTries.text.isEmpty()){
+            deviceDataToSave.maxTries = Integer.valueOf(config_maxTries.text.toString())
         }
         for(i in 0 until inputTextArray.size){
             if(inputTextArray[i].text!=null && !inputTextArray[i].text.isEmpty()) {

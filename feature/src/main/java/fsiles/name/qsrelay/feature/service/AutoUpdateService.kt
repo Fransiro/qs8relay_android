@@ -15,28 +15,40 @@ class AutoUpdateService: IntentService("AutoUpdateService") {
 
     companion object {
         private var timer: Timer? = null
-        private var counter = 0
+        private const val INITIAL_TASK_DELAY_MS: Long = 1000
+        private const val NORMAL_TASK_DELAY_MS: Long = 30000
     }
 
     override fun onHandleIntent(p0: Intent?) {
+        val startDate = Date()
         try{
-            if(timer!=null){
-                timer!!.cancel()
-                timer = null
-                counter = 0
-            }
-            timer = Timer()
-            timer!!.schedule(object: TimerTask() {
-                override fun run() {
-                    //Log.i("QSRELAY_LOG", "AutoUpdateService is running $counter secons")
-                    processService()
-                    counter += 30
-                }
-            }, 2000, 30000)
+            createTimer()
+            timer!!.schedule(getTimerTask(), INITIAL_TASK_DELAY_MS)
         }catch (e: Exception){
-            Log.e("QSRELAY_LOG","AutoUpdateService - A error occurred when auto-update"
-                    + " after $counter seconds running", e)
+            val runningTime = (Date().time - startDate.time)/1000.0
+                    Log.e("QSRELAY_LOG","AutoUpdateService - A error occurred when auto-update"
+                    + " after $runningTime seconds running", e)
         }
+    }
+
+    private fun getTimerTask(): TimerTask? {
+        return object: TimerTask() {
+            override fun run() {
+                //Log.i("QSRELAY_LOG", "AutoUpdateService is running $counter secons")
+                processService()
+                if(AutoUpdateService.timer != null){
+                    AutoUpdateService.timer!!.schedule(getTimerTask(), NORMAL_TASK_DELAY_MS)
+                }
+            }
+        }
+    }
+
+    private fun createTimer() {
+        if(timer!=null){
+            timer!!.cancel()
+            timer = null
+        }
+        timer = Timer()
     }
 
     private fun processService(){
@@ -70,7 +82,10 @@ class AutoUpdateService: IntentService("AutoUpdateService") {
                         commandIndex.add(relay.index)
                     }
                 }
-                val results = RelaysUtils.sendCommands(bAdapter, mAddress, commands)
+                val maxTries = deviceData.maxTries
+                val msTimeBetweenEachTry = deviceData.msTimeBetweenEachTry
+                val results = RelaysUtils.sendCommands(bAdapter, mAddress,
+                        maxTries, msTimeBetweenEachTry, commands)
                 for(i in 0 until results.size){
                     if(!results[i]){
                         Log.e("AutoUpdateService",
