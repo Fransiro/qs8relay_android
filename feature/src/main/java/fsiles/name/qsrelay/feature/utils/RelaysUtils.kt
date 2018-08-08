@@ -9,7 +9,6 @@ class RelaysUtils{
     companion object {
         // This UUID is standard UUID for relays do not change it
         private var mMyUUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
-        private var globalThreadNum=0
 
         fun sendCommands(mBluetoothAdapter: BluetoothAdapter, mAddress: String, maxTries: Int,
                          msTimeBetweenEachTry: Long,
@@ -18,7 +17,6 @@ class RelaysUtils{
             mBluetoothAdapter.cancelDiscovery()
             var numTries = 0
             var connected = false
-            val threadNum = globalThreadNum++
             while(numTries < maxTries && !connected){
                 lastIndex = connectAndSend(mBluetoothAdapter, mAddress, commands)
                 connected = lastIndex > 0
