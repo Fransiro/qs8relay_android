@@ -14,5 +14,7 @@ App features:
 
 4) If app is closed you can run background service by re-open the application and send to background.
 
+5) When communicate with device you can configure number of tries and milliseconds between each try. You can configure it on device config view.
+
 Thanks you for see my repo!
 
