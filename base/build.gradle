@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     baseFeature true
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 2
         versionName "1.1"
@@ -22,4 +22,5 @@ dependencies {
     api 'com.android.support.constraint:constraint-layout:1.1.2'
     application project(':app')
     feature project(':feature')
+    feature project(":voiceFeature")
 }
