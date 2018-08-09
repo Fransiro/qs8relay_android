@@ -8,6 +8,7 @@
     <permission android:name="android.permission.BLUETOOTH" android:label="BLUETOOTH" />
     <permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <permission android:name="android.permission.BIND_JOB_SERVICE" />
 
 
     <application>

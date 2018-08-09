@@ -15,6 +15,7 @@ import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.widget.SimpleAdapter
+import fsiles.name.qsrelay.feature.service.JobUtils
 import fsiles.name.qsrelay.feature.store.DeviceData
 import fsiles.name.qsrelay.feature.store.StoreUtils
 import fsiles.name.qsrelay.feature.utils.Constants
@@ -92,6 +93,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(!JobUtils.checkOldAndroidVerions()){
+            startBackgroundService()
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         startBackgroundService()
@@ -99,8 +107,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startBackgroundService() {
-        val intent = Intent(Constants.QS_RELAY_SERVICE_ACTION_START)
-        sendBroadcast(intent)
+        if(JobUtils.checkOldAndroidVerions()) {
+            val intent = Intent(Constants.QS_RELAY_SERVICE_ACTION_START)
+            sendBroadcast(intent)
+        }else{
+            Log.i("QS-RELAY_LOG", "[MainActivity] startBackgroundService newer android version")
+            JobUtils.scheduleJob(applicationContext, true)
+        }
     }
 
     private fun checkBluetoothAdminPermissions() {

@@ -32,6 +32,7 @@ class JobUtils{
                 builder.setMinimumLatency(MIN_LATENCY_NOT_RAPID_MODE) // wait at least
                 builder.setOverrideDeadline(MAX_OVERRIDE_DEADLINE_NOT_RAPID_MODE) // maximum delay
             }
+            builder.setPersisted(true)
             //builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED); // require unmetered network
             //builder.setRequiresDeviceIdle(true); // device should be idle
             //builder.setRequiresCharging(false); // we don't care if the device is charging or not
@@ -100,6 +101,10 @@ class JobUtils{
 
         private fun getHexadecimalString(command: ByteArray): String{
             return BigInteger(1, command).toString(16).toUpperCase()
+        }
+
+        fun checkOldAndroidVerions(): Boolean {
+            return android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N
         }
 
     }

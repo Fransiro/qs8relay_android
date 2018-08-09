@@ -16,7 +16,7 @@ class StartAutoUpdateReceiver: BroadcastReceiver() {
             intentMain.putExtra(MainActivity.EXTRA_BOOT_KEY, true)
             context.startActivity(intentMain)
         } else {
-            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O) {
+            if(JobUtils.checkOldAndroidVerions()) {
                 val serviceIntent = Intent(context, AutoUpdateService::class.java)
                 serviceIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startService(serviceIntent)
