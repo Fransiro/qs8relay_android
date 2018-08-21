@@ -3,6 +3,7 @@ package fsiles.name.qsrelay.feature.service
 import android.app.job.JobParameters
 import android.app.job.JobService
 import android.util.Log
+import fsiles.name.qsrelay.feature.log.AppLog
 
 class AutoUpdateJobService: JobService() {
     override fun onStartJob(p0: JobParameters?): Boolean {

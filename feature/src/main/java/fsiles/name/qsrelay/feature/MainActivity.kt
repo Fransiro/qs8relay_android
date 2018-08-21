@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.SimpleAdapter
 import fsiles.name.qsrelay.feature.service.JobUtils
 import fsiles.name.qsrelay.feature.store.DeviceData
@@ -93,26 +95,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        if(!JobUtils.checkOldAndroidVerions()){
-            startBackgroundService()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        startBackgroundService()
-        //Log.i("QSRELAY_LOG","MainActivity - Called on destroy")
-    }
-
     private fun startBackgroundService() {
-        if(JobUtils.checkOldAndroidVerions()) {
+        if(JobUtils.checkOldAndroidVersions()) {
             val intent = Intent(Constants.QS_RELAY_SERVICE_ACTION_START)
             sendBroadcast(intent)
         }else{
-            Log.i("QS-RELAY_LOG", "[MainActivity] startBackgroundService newer android version")
-            JobUtils.scheduleJob(applicationContext, true)
+            /*if(!JobUtils.isJobStarted(applicationContext)){
+                JobUtils.scheduleJob(applicationContext, true)
+            }*/
         }
     }
 
@@ -243,5 +233,22 @@ class MainActivity : AppCompatActivity() {
          }
      }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val toReturn = super.onCreateOptionsMenu(menu)
+        val inflater = menuInflater
+        inflater.inflate(R.menu.log_menu, menu)
+        return toReturn
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.logMenu -> {
+            val intent = Intent(this, LogActivity::class.java)
+            startActivity(intent)
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
 
 }

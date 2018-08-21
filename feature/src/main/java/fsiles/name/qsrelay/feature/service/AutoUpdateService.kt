@@ -1,14 +1,8 @@
 package fsiles.name.qsrelay.feature.service
 
 import android.app.IntentService
-import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.util.Log
-import fsiles.name.qsrelay.feature.store.DeviceData
-import fsiles.name.qsrelay.feature.store.RelayData
-import fsiles.name.qsrelay.feature.store.StoreUtils
-import fsiles.name.qsrelay.feature.utils.RelaysUtils
-import java.math.BigInteger
 import java.util.*
 
 class AutoUpdateService: IntentService("AutoUpdateService") {

@@ -21,10 +21,11 @@ class JobUtils{
         private const val MAX_OVERRIDE_DEADLINE_RAPID_MODE: Long = 3 * 1000 //ms
         private const val MIN_LATENCY_NOT_RAPID_MODE: Long = 25 * 1000 //ms
         private const val MAX_OVERRIDE_DEADLINE_NOT_RAPID_MODE: Long = 35 * 1000 //ms
+        private const val AUTO_UPDATE_JOB_SERVICE_JOB_ID = 0
 
         fun scheduleJob(context: Context, rapid: Boolean) {
             val serviceComponent = ComponentName(context, AutoUpdateJobService::class.java)
-            val builder = JobInfo.Builder(0, serviceComponent)
+            val builder = JobInfo.Builder(AUTO_UPDATE_JOB_SERVICE_JOB_ID, serviceComponent)
             if(rapid){
                 builder.setMinimumLatency(MIN_LATENCY_RAPID_MODE) // wait at least
                 builder.setOverrideDeadline(MAX_OVERRIDE_DEADLINE_RAPID_MODE) // maximum delay
@@ -36,8 +37,27 @@ class JobUtils{
             //builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED); // require unmetered network
             //builder.setRequiresDeviceIdle(true); // device should be idle
             //builder.setRequiresCharging(false); // we don't care if the device is charging or not
+            if(isJobStarted(context)){
+                cancelJob(context)
+            }
             val jobScheduler = context.getSystemService(JobScheduler::class.java)
             jobScheduler.schedule(builder.build())
+        }
+
+        fun cancelJob(context: Context){
+            val jobScheduler = context.getSystemService(JobScheduler::class.java)
+            jobScheduler.cancel(AUTO_UPDATE_JOB_SERVICE_JOB_ID)
+        }
+
+        fun isJobStarted(context: Context): Boolean{
+            var toReturn = false
+            val jobScheduler = context.getSystemService(JobScheduler::class.java)
+            for(jobInfo in jobScheduler.allPendingJobs){
+                if(jobInfo.id == AUTO_UPDATE_JOB_SERVICE_JOB_ID){
+                    toReturn = true
+                }
+            }
+            return toReturn
         }
 
         fun processService(context: Context){
@@ -56,7 +76,7 @@ class JobUtils{
                     }
                 }
             }catch (e: Exception){
-                Log.e("AutoUpdateService","A error occurred when processService.", e)
+                Log.e("JobUtils","A error occurred when processService.", e)
             }
         }
 
@@ -77,7 +97,7 @@ class JobUtils{
                             maxTries, msTimeBetweenEachTry, commands)
                     for(i in 0 until results.size){
                         if(!results[i]){
-                            Log.e("AutoUpdateService",
+                            Log.e("JobUtils",
                                     "Failed to send a command with index:"+commandIndex[i]
                                             + " and command "
                                             + getHexadecimalString(commands[i]))
@@ -85,7 +105,7 @@ class JobUtils{
                     }
                 }
             }catch (e: Exception){
-                Log.e("AutoUpdateService",
+                Log.e("JobUtils",
                         "A error occurred when processDevice: $mAddress.",
                         e)
             }
@@ -103,7 +123,7 @@ class JobUtils{
             return BigInteger(1, command).toString(16).toUpperCase()
         }
 
-        fun checkOldAndroidVerions(): Boolean {
+        fun checkOldAndroidVersions(): Boolean {
             return android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N
         }
 

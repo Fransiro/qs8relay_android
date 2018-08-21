@@ -23,4 +23,9 @@
     <string name="config_relay6">Relay 6 name</string>
     <string name="config_relay7">Relay 7 name</string>
     <string name="config_relay8">Relay 8 name</string>
+    <string name="log">Log</string>
+    <string name="start_service">Start service</string>
+    <string name="stop_service">Stop service</string>
+    <string name="clear_logs">Clear logs</string>
+    <string name="service_is_running">Service is running?</string>
 </resources>
