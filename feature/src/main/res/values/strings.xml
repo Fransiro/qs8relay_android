@@ -28,4 +28,6 @@
     <string name="stop_service">Stop service</string>
     <string name="clear_logs">Clear logs</string>
     <string name="service_is_running">Service is running?</string>
+    <string name="turn_on">Turn on</string>
+    <string name="turn_off">Turn off</string>
 </resources>

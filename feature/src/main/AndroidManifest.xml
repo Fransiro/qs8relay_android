@@ -5,11 +5,13 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <permission android:name="android.permission.BLUETOOTH" android:label="BLUETOOTH" />
+
+    <permission
+        android:name="android.permission.BLUETOOTH"
+        android:label="BLUETOOTH" />
     <permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <permission android:name="android.permission.BIND_JOB_SERVICE" />
-
 
     <application>
         <activity android:name=".MainActivity">
@@ -30,32 +32,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ControlActivity">
+        <activity android:name=".ControlActivity"></activity>
+        <activity android:name=".ConfigDeviceActivity"></activity>
+        <activity android:name=".LogActivity"></activity>
 
-        </activity>
-        <activity android:name=".ConfigDeviceActivity">
-
-        </activity>
-        <activity android:name=".LogActivity">
-
-        </activity>
-
-        <service android:name=".service.AutoUpdateService"
+        <service
+            android:name=".service.AutoUpdateService"
             android:enabled="true"
-            android:exported="true"
-             />
+            android:exported="true" />
         <service
             android:name=".service.AutoUpdateJobService"
-            android:label="Job for auto update relays"
-            android:permission="android.permission.BIND_JOB_SERVICE"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true"
+            android:label="Job for auto update relays"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <receiver android:name=".service.StartAutoUpdateReceiver"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
+        <receiver
+            android:name=".service.StartAutoUpdateReceiver"
             android:enabled="true"
             android:exported="false"
-            >
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
@@ -67,8 +63,18 @@
                 <action android:name="android.intent.action.SCREEN_ON" />
                 <action android:name="android.intent.action.USER_UNLOCKED" />
                 <action android:name="name.fsiles.qsrelay.action_boot_app" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </receiver>
+        <receiver android:name=".ServiceWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/service_widget_info" />
         </receiver>
     </application>
 
