@@ -27,7 +27,7 @@ dependencies {
     implementation project(':feature')
     implementation project(':base')
     implementation "org.jetbrains.anko:anko-common:$anko_version"
-    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
+    implementation "org.jetbrains.anko:anko-sdk27:$anko_version"
     implementation "org.jetbrains.anko:anko-appcompat-v7-commons:$anko_version"
     implementation "com.google.code.gson:gson:$gson_version"
 }
