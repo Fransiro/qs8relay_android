@@ -5,5 +5,7 @@
     <color name="colorSecondary">#BB86FC</color>
     <color name="colorSecondaryDark">#673AB7</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="stoppedService">#D84315</color>
+    <color name="startedService">#689F38</color>
     <color name="modal">#99FFFFFF</color>
 </resources>

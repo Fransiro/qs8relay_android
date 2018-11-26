@@ -67,9 +67,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".ServiceWidget">
+
+        <receiver android:name=".ServiceWidget"
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="name.fsiles.qsrelay.action.WIDGET_TURN_ON_BUTTON" />
+                <action android:name="name.fsiles.qsrelay.action.WIDGET_TURN_OFF_BUTTON" />
             </intent-filter>
 
             <meta-data

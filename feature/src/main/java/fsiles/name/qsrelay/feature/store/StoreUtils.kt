@@ -10,6 +10,7 @@ class StoreUtils {
 
         private const val QS_RELAY_STORE_SHARED_PREFERENCES_KEY = "QS_RELAY_STORE"
         private const val DEVICE_STORE_SHARED_PREFERENCES_KEY = "devicesStore"
+        private const val LAST_WIDGET_STATE_SHARED_PREFERENCES_KEY = "lastWidgetState"
         private const val DEFAULT_DEVICE_STORE_SHARED_PREFERENCES_VALUE = ""
 
         fun getDevicesStore(c: Context): DevicesStore? {
@@ -58,6 +59,23 @@ class StoreUtils {
                 Log.e("DeviceStore","Cannot marshal or save devices store", e)
             }
             return toReturn
+        }
+
+        fun getLastWidgetState(c: Context): Boolean{
+            val settings: SharedPreferences? = getSharedPreferences(c)
+            var lastWidgetState = settings?.getBoolean(LAST_WIDGET_STATE_SHARED_PREFERENCES_KEY,
+                    false)
+            if(lastWidgetState==null){
+                lastWidgetState = false
+            }
+            return lastWidgetState
+        }
+
+        fun saveLastWidgetState(c: Context, state: Boolean): Boolean{
+            val settings: SharedPreferences? = getSharedPreferences(c)
+            val editor = settings!!.edit()
+            editor.putBoolean(LAST_WIDGET_STATE_SHARED_PREFERENCES_KEY, state)
+            return editor.commit()
         }
 
         private fun getSharedPreferences(c: Context): SharedPreferences? {
