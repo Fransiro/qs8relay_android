@@ -16,5 +16,7 @@ App features:
 
 5) When communicate with device you can configure number of tries and milliseconds between each try. You can configure it on device config view.
 
+6) The app has a widget for see and update background service.
+
 Thanks you for see my repo!
 
