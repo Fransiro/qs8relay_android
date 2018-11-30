@@ -13,6 +13,7 @@
     <string name="save_config">Save config</string>
     <string name="config">Configuration</string>
     <string name="config_deviceName">Device name</string>
+    <string name="config_minTries">Min connection tries</string>
     <string name="config_maxTries">Max connection tries</string>
     <string name="config_msTimeBetweenEachTry">Milliseconds between tries</string>
     <string name="config_relay1">Relay 1 name</string>

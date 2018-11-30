@@ -6,5 +6,6 @@ class DeviceData: Serializable {
     internal var name: String? = null
     internal var relays: ArrayList<RelayData> = ArrayList()
     internal var maxTries: Int = 1
+    internal var minTries: Int = 1
     internal var msTimeBetweenEachTry: Long = 1000
 }

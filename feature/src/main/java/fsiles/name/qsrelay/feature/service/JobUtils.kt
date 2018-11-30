@@ -92,9 +92,10 @@ class JobUtils{
                         }
                     }
                     val maxTries = deviceData.maxTries
+                    val minTries = deviceData.minTries
                     val msTimeBetweenEachTry = deviceData.msTimeBetweenEachTry
                     val results = RelaysUtils.sendCommands(bAdapter, mAddress,
-                            maxTries, msTimeBetweenEachTry, commands)
+                            maxTries, minTries, msTimeBetweenEachTry, commands)
                     for(i in 0 until results.size){
                         if(!results[i]){
                             Log.e("JobUtils",

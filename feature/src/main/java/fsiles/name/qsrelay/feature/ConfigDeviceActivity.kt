@@ -1,6 +1,7 @@
 package fsiles.name.qsrelay.feature
 
 import android.os.Bundle
+import android.support.annotation.IntegerRes
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.widget.EditText
@@ -37,6 +38,8 @@ class ConfigDeviceActivity: AppCompatActivity() {
             if(deviceData.name!=null && !deviceData.name!!.isEmpty()){
                 config_deviceName.text = Editable.Factory.getInstance().newEditable(deviceData.name)
             }
+            config_minTries.text =
+                    Editable.Factory.getInstance().newEditable(deviceData.minTries.toString())
             config_maxTries.text =
                         Editable.Factory.getInstance().newEditable(deviceData.maxTries.toString())
             config_msTimeBetweenEachTry.text =
@@ -85,6 +88,9 @@ class ConfigDeviceActivity: AppCompatActivity() {
         }
         if(config_maxTries.text != null && !config_maxTries.text.isEmpty()){
             deviceDataToSave.maxTries = Integer.valueOf(config_maxTries.text.toString())
+        }
+        if(config_minTries.text != null && !config_minTries.text.isEmpty()){
+            deviceDataToSave.minTries = Integer.valueOf(config_minTries.text.toString())
         }
         for(i in 0 until inputTextArray.size){
             if(inputTextArray[i].text!=null && !inputTextArray[i].text.isEmpty()) {

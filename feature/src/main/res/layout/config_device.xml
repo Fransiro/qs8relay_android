@@ -32,10 +32,25 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/config_input_maxTries"
+                android:id="@+id/config_input_minTries"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/config_input_deviceName">
+
+                <EditText
+                    android:id="@+id/config_minTries"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:hint="@string/config_minTries"
+                    android:inputType="numberSigned"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/config_input_maxTries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/config_input_minTries">
 
                 <EditText
                     android:id="@+id/config_maxTries"

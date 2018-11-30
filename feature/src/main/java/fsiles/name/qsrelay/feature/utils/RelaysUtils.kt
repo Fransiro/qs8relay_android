@@ -11,13 +11,13 @@ class RelaysUtils{
         private var mMyUUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
 
         fun sendCommands(mBluetoothAdapter: BluetoothAdapter, mAddress: String, maxTries: Int,
-                         msTimeBetweenEachTry: Long,
+                         minTries: Int, msTimeBetweenEachTry: Long,
                          commands: ArrayList<ByteArray>): ArrayList<Boolean> {
             var lastIndex = 0
             mBluetoothAdapter.cancelDiscovery()
             var numTries = 0
             var connected = false
-            while(numTries < maxTries && !connected){
+            while(numTries < minTries || (numTries < maxTries && !connected)){
                 lastIndex = connectAndSend(mBluetoothAdapter, mAddress, commands)
                 connected = lastIndex > 0
                 numTries++

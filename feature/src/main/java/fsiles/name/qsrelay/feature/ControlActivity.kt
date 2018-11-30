@@ -138,9 +138,11 @@ class ControlActivity: AppCompatActivity() {
     private fun saveAllConfig(): java.util.ArrayList<Boolean> {
         var deviceData = StoreUtils.findDeviceData(applicationContext, mAddress)
         var maxTries = 1
+        var minTries = 1
         var msTimeBetweenEachTry:Long = 1000
         if(deviceData != null){
             maxTries = deviceData.maxTries
+            minTries = deviceData.minTries
             msTimeBetweenEachTry = deviceData.msTimeBetweenEachTry
         }
         val toSend = ArrayList<ByteArray>()
@@ -149,7 +151,7 @@ class ControlActivity: AppCompatActivity() {
             toSend.add(RelaysUtils.getCommand(i, relay.isChecked))
         }
         return RelaysUtils.sendCommands(mBluetoothAdapter,
-                mAddress, maxTries, msTimeBetweenEachTry, toSend)
+                mAddress, maxTries, minTries, msTimeBetweenEachTry, toSend)
     }
 
     private fun showToastInMainLoop(message: String, duration: Int){
